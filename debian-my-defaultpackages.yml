@@ -66,6 +66,7 @@
           - figlet
           - neofetch
           - htop
+          - bpytop
           - mc
           - jq
         state: latest
