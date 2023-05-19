@@ -10,20 +10,12 @@
 #  you know what   |_|   |_|\__,_|\__, |_.__/ \___/ \___/|_|\_\___/
 #  they change/do                 |___/ 
 # 
-#  .---------| My "Hardning" for FleetDM Compliance completion
-#  |
-#  | This is a bit of a special one, yes it's hardning, but it might
-#  | not contain all the normal stuff - I use this to keep my hosts
-#  | inline with my compliance requirements that i have set inside
-#  | FleetDM so that i don't recieve complience alerts and also to
-#  | keep the hosts harden and secure of course. But it's not a
-#  | "100%" total lock down.
+#  .---------| My Compliance Playbooks - NTP (time sync)
 #  | 
 #  | This playbook will do the following:
-#  | - Make sure SSHd only accepts root via "key"
-#  | 
-#  | 
-#  | 
+#  | - Install NTP package to latest
+#  | - Copy over the ntp.conf template
+#  | - Will use your default gateway IP as default NTP server!
 #  `---------------------------------------------------------------
 ---
 
@@ -50,9 +42,12 @@
         virtual: true
       when: virtual
 
-    - name: SSH-COMPLIANCE %% Disable password authentication for root
-      lineinfile:
-        path: /etc/ssh/sshd_config
-        state: present
-        regexp: '^#?PermitRootLogin'
-        line: 'PermitRootLogin prohibit-password'
+    - name: Install NTP package
+      register: updatesys
+      apt:
+        update_cache: yes
+        force_apt_get: yes
+        cache_valid_time: 3600
+        name:
+          - ntp
+        state: latest
