@@ -33,7 +33,7 @@
     - name: Remove dependencies that are no longer required
       ansible.builtin.apt:
         autoremove: yes
-
-   - name: Remove apt cache to free up disk space
-     apt:
-       clean: yes
+    
+    - name: Remove apt cache to free up disk space
+      ansible.builtin.apt:
+        clean: yes
