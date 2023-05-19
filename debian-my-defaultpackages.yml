@@ -67,6 +67,7 @@
           - neofetch
           - htop
           - mc
+          - jq
         state: latest
 
     - name: Install QEMU Guest Agent on propper VM's
