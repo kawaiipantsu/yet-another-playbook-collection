@@ -14,7 +14,7 @@ leapfile /usr/share/zoneinfo/leap-seconds.list
 statistics loopstats peerstats clockstats
 
 ## Remote NTP Server to use
-server {{ ansible_facts['ansible_default_ipv4']['gateway'] }} prefer
+server {{ ansible_default_ipv4 }} prefer
 
 ## Allow fallback to hardware clock
 ## Stratum 10 = No clock source, 1,2 = GPS/Atomic clock source
