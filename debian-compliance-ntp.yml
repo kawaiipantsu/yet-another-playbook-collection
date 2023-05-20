@@ -21,27 +21,6 @@
 
 - hosts: debian
   tasks:
-    - name: Check if platform is Virtual
-      lineinfile:
-        dest: /sys/devices/virtual/dmi/id/sys_vendor
-        line: "QEMU"
-      check_mode: yes
-      register: virtual
-      failed_when: (virtual is changed) or (virtual is failed)
-      ignore_errors: true
-
-    - name: Check if platform is Physical
-      set_fact:
-        physical: true
-        virtual: false
-      when: virtual is changed
-
-    - name: Set fact for Virtual
-      set_fact:
-        physical: false
-        virtual: true
-      when: virtual
-
     - name: Install NTP package
       register: updatesys
       apt:
@@ -51,3 +30,29 @@
         name:
           - ntp
         state: latest
+
+    - name: Generate NTP configuration file.
+      template:
+        src: "ntp.conf.j2"
+        dest: "/etc/ntp.conf"
+        mode: 0644
+      notify:
+        - Restart NTP
+        - Restart CRON
+
+    - name: Ensure NTP is running and enabled as configured.
+      service:
+        name: "ntp"
+        state: started
+        enabled: true
+
+  handlers:
+    - name: Restart NTP
+      service:
+        name: "ntp"
+        state: restarted
+
+    - name: Restart CRON
+      service:
+        name: "crond"
+        state: restarted

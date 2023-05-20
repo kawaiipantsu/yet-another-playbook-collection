@@ -1,0 +1,29 @@
+#   _   _ _____ ____    
+#  | \ | |_   _|  _ \   |  Simple NTP config
+#  |  \| | | | | |_) |  |  - Using local ntp server
+#  | |\  | | | |  __/   |  - Or hardware clock
+#  |_| \_| |_| |_|      |  - Restricted to client mode
+# ---------------------------------------------------------
+# {{ ansible_managed }}
+# {{ template_host }}
+# {{ template_uid }} - {{ template_path }}
+
+## NTP Global settings
+driftfile /var/lib/ntp/ntp.drift
+leapfile /usr/share/zoneinfo/leap-seconds.list
+statistics loopstats peerstats clockstats
+
+## Remote NTP Server to use
+server {{ ansible_facts['ansible_default_ipv4']['gateway'] }} prefer
+
+## Allow fallback to hardware clock
+## Stratum 10 = No clock source, 1,2 = GPS/Atomic clock source
+server 127.127.1.0
+fudge 127.127.1.0 stratum 10
+
+## Restrictions
+restrict -4 default kod notrap nomodify nopeer noquery limited
+restrict -6 default kod notrap nomodify nopeer noquery limited
+restrict source notrap nomodify noquery
+restrict 127.0.0.1
+restrict ::1
