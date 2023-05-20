@@ -20,7 +20,7 @@
 #  `---------------------------------------------------------------
 ---
 
-- hosts: all
+- hosts: debian
   tasks:
     - name: First update apt cache for fresh dependency overview
       ansible.builtin.apt:

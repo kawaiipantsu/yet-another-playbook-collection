@@ -21,7 +21,7 @@
 #  `---------------------------------------------------------------
 ---
 
-- hosts: all
+- hosts: debian
   gather_facts: false
   tasks:
   - name: Select default locale

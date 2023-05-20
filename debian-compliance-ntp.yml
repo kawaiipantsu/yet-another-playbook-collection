@@ -19,7 +19,7 @@
 #  `---------------------------------------------------------------
 ---
 
-- hosts: all
+- hosts: debian
   tasks:
     - name: Install NTP package
       register: updatesys
