@@ -5,8 +5,7 @@
 #  |_| \_| |_| |_|      |  - Restricted to client mode
 # ---------------------------------------------------------
 # {{ ansible_managed }}
-# {{ template_host }}
-# {{ template_uid }} - {{ template_path }}
+# Template used: {{ template_path }}
 
 ## NTP Global settings
 driftfile /var/lib/ntp/ntp.drift
@@ -14,7 +13,7 @@ leapfile /usr/share/zoneinfo/leap-seconds.list
 statistics loopstats peerstats clockstats
 
 ## Remote NTP Server to use
-server {{ ansible_default_ipv4 }} prefer
+server {{ ansible_default_ipv4.gateway }} prefer
 
 ## Allow fallback to hardware clock
 ## Stratum 10 = No clock source, 1,2 = GPS/Atomic clock source
