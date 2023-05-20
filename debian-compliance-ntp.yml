@@ -51,8 +51,11 @@
       service:
         name: "ntp"
         state: restarted
+      ignore_errors: true
 
     - name: Restart CRON
       service:
         name: "crond"
         state: restarted
+      ignore_errors: true
+
