@@ -25,7 +25,7 @@
 
       - name: Print
         ansible.builtin.debug:
-        msg:
-          - "Your password is: {{ password }}"
-          
+          msg:
+            - "Your password is: {{ password }}"
+
         
