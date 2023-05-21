@@ -118,6 +118,7 @@
         check_implicit_admin: true
         login_unix_socket: /run/mysqld/mysqld.sock
         name: "{{ db_username }}"
+        host_all: true
         state: absent
 
     - name: Create Main PowerDNS Databases
@@ -155,7 +156,7 @@
         state: present
         name: "{{ db_username }}"
         password: "{{ db_password }}"
-        host_all: true
+        host: "%"
         priv:
           '{{ db_pdns_master }}.*': 'ALL,GRANT'
           '{{ db_pdns_slave }}.*': 'ALL,GRANT'
