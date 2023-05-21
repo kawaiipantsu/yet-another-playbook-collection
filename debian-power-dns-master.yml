@@ -157,13 +157,13 @@
         name: "{{ db_username }}"
         password: "{{ db_password }}"
         host: "%"
-        priv:
-          "{{ db_pdns_master }}.*": 'ALL,GRANT'
-          "{{ db_pdns_slave }}.*": 'ALL,GRANT'
-          "{{ db_powerdnsadmin }}.*": 'ALL,GRANT'
-          'pdns_%.*': 'ALL,GRANT'
-          'powerdns_%.*': 'ALL,GRANT'
-          'powerdns.*': 'ALL,GRANT'
+        priv: >-
+          "{{ db_pdns_master }}.*:ALL,GRANT"
+          "{{ db_pdns_slave }}.*:ALL,GRANT"
+          "{{ db_powerdnsadmin }}.*:ALL,GRANT"
+          "pdns_%.*:ALL,GRANT"
+          "powerdns_%.*:ALL,GRANT"
+          "powerdns.*:ALL,GRANT"
 
     - name: Generate gmysql configuration file.
       template:
@@ -171,7 +171,7 @@
         dest: "/etc/powerdns/pdns.d/pdns.local.gmysql.conf"
         owner: root
         group: pdns
-        mode: 640
+        mode: 0640
 
     - name: Install PowerDNS-Admin 
       shell: |
@@ -184,7 +184,7 @@
         dest: "/opt/powerdns-admin/configs/production.py"
         owner: pdns
         group: root
-        mode: 640
+        mode: 0640
 
     - name: Generate powerdns-build file.
       template:
@@ -192,7 +192,7 @@
         dest: "/opt/powerdns-admin/ansible-build.sh"
         owner: root
         group: root
-        mode: 750
+        mode: 0750
 
     - name: DB - DEBUG
       ansible.builtin.debug:
@@ -210,7 +210,7 @@
       template:
         src: "powerdnsadmin.systemd.service.j2"
         dest: "/etc/systemd/system/powerdns-admin.service"
-        mode: 644
+        mode: 0644
 
     - name: PowerDNS - Enable API Access
       lineinfile:
