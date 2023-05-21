@@ -59,6 +59,7 @@
           - nodejs
           - yarn
           - python3-dev
+          - python3-pip
           - git
           - libsasl2-dev
           - libldap2-dev
