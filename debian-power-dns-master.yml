@@ -169,7 +169,7 @@
       template:
         src: "pdns.local.gmysql.conf.j2"
         dest: "/etc/powerdns/pdns.d/pdns.local.gmysql.conf"
-        owner: root
+        owner: pdns
         group: pdns
         mode: 0640
 
@@ -182,16 +182,12 @@
       template:
         src: "powerdns.admin.config.py.j2"
         dest: "/opt/powerdns-admin/configs/production.py"
-        owner: pdns
-        group: root
         mode: 0640
 
     - name: Generate powerdns-build file.
       template:
         src: "powerdns-admin.build.sh.j2"
         dest: "/opt/powerdns-admin/ansible-build.sh"
-        owner: root
-        group: root
         mode: 0750
 
     - name: PowerDNS-Admin build and initiate DB
@@ -234,7 +230,7 @@
     - name: Set owner and group for powerdns-admin
       file:
         path: /opt/powerdns-admin
-        recurse:true
+        recurse: true
         owner: pdns
         group: pdns
 
