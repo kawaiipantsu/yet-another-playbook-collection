@@ -157,15 +157,13 @@
         name: "{{ db_username }}"
         password: "{{ db_password }}"
         host: "%"
-        priv: "{{ item }}.*:ALL,GRANT"
-        append_privs: 'yes'
-      with_items:
-        "{{ db_pdns_master }}"
-        "{{ db_pdns_slave }}"
-        "{{ db_powerdnsadmin }}"
-        "pdns_%"
-        "powerdns_%"
-        "powerdns"
+        priv:
+          "{{ db_pdns_master }}.*": "ALL,GRANT"
+          "{{ db_pdns_slave }}.*": "ALL,GRANT"
+          "{{ db_powerdnsadmin }}.*": "ALL,GRANT"
+          "pdns_%.*": "ALL,GRANT"
+          "powerdns_%.*": "ALL,GRANT"
+          "powerdns.*": "ALL,GRANT"
 
     - name: Generate gmysql configuration file.
       template:
