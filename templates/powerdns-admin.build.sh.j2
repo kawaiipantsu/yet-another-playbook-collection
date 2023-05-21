@@ -18,7 +18,7 @@ python3 -mvenv ./venv
 source ./venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
-export FLASK_CONF=/opt/powerdns-admin/configs/production.py
+export FLASK_CONF=../configs/production.py
 export FLASK_APP=powerdnsadmin/__init__.py
 flask db upgrade
 yarn install --pure-lockfile

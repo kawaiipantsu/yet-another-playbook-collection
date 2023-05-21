@@ -13,10 +13,10 @@ After=network.target
 
 [Service]
 Type=simple
-User=nobody
-Group=nogroup
-Environment=PATH=/opt/powerdns-admin/flask/bin
-ExecStart=/opt/powerdns-admin/flask/bin/python /opt/powerdns-admin/run.py
+User=pdns
+Group=pdns
+Environment=PATH=/opt/powerdns-admin/venv/bin
+ExecStart=/opt/powerdns-admin/venv/bin/python /opt/powerdns-admin/run.py
 WorkingDirectory=/opt/powerdns-admin
 Restart=always
 

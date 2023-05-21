@@ -194,15 +194,6 @@
         group: root
         mode: 0750
 
-    - name: DB - DEBUG
-      ansible.builtin.debug:
-        msg:
-          - "DB Username................: {{ db_username }}"
-          - "DB Password................: {{ db_password }}"
-          - "DB PDNS DB.................: {{ db_pdns_master }}"
-          - "DB PDNS DB...(not used)....: {{ db_pdns_slave }}"
-          - "DB PDNS-ADMIN DB...........: {{ db_powerdnsadmin }}"
-
     - name: PowerDNS-Admin build and initiate DB
       ansible.builtin.shell: /opt/powerdns-admin/ansible-build.sh
 
@@ -239,6 +230,13 @@
         state: present
         regexp: '^#?api-key='
         line: 'api-key={{ api_secret }}'
+
+    - name: Set owner and group for powerdns-admin
+      file:
+        path: /opt/powerdns-admin
+        recurse:true
+        owner: pdns
+        group: pdns
 
     - name: Enable service powerdns and start it
       ansible.builtin.systemd:
