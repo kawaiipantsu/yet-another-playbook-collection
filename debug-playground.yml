@@ -1,0 +1,31 @@
+#   _  __                   _ _ ____             _             
+#  | |/ /__ ___      ____ _(_|_)  _ \ __ _ _ __ | |_ ___ _   _ 
+#  | ' // _` \ \ /\ / / _` | | | |_) / _` | '_ \| __/ __| | | |
+#  | . \ (_| |\ V  V / (_| | | |  __/ (_| | | | | |_\__ \ |_| |
+#  |_|\_\__,_| \_/\_/ \__,_|_|_|_|   \__,_|_| |_|\__|___/\__,_|
+#                   ____  _             _                 _        
+#  [   ANSIBLE   ] |  _ \| | __ _ _   _| |__   ___   ___ | | _____ 
+#  Please only use | |_) | |/ _` | | | | '_ \ / _ \ / _ \| |/ / __|
+#  playbooks if    |  __/| | (_| | |_| | |_) | (_) | (_) |   <\__ \
+#  you know what   |_|   |_|\__,_|\__, |_.__/ \___/ \___/|_|\_\___/
+#  they change/do                 |___/ 
+# 
+#  .---------| Debug / Playground
+#  |
+#  | This playbook just contains stuff i play an test out before
+#  | implementing it in a useful playbook :)
+#  `---------------------------------------------------------------
+---
+
+- hosts: debian
+  tasks:
+      - name: Create random password for DB backend
+        ansible.builtin.set_fact:
+          password: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits', 'punctuation'], length=15) }}"
+
+      - name: Print
+        ansible.builtin.debug:
+        msg:
+          - "Your password is: {{ password }}"
+          
+        
