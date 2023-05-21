@@ -158,6 +158,7 @@
         password: "{{ db_password }}"
         host: "%"
         priv: "{{ item }}.*:ALL,GRANT"
+        append_privs: 'yes'
       with_items:
         "{{ db_pdns_master }}"
         "{{ db_pdns_slave }}"
