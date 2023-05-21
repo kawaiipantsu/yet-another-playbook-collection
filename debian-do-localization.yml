@@ -63,6 +63,7 @@
       state: restarted
       enabled: true
     when: timezone.changed
+    ignore_errors: true
 
   handlers:
     - name: Rebuild locales database
