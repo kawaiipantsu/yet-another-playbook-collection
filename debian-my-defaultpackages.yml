@@ -57,6 +57,7 @@
           - curl
           - w3m
           - ftp
+          - net-tools
           - netcat-traditional
           - tcpdump
           - tshark
