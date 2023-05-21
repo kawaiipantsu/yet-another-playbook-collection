@@ -219,6 +219,20 @@
         regexp: '^#?api='
         line: 'api=yes'
 
+    - name: PowerDNS - Recursor change default port to 5353
+      lineinfile:
+        path: /etc/powerdns/recursor.conf
+        state: present
+        regexp: '^#?local-port='
+        line: 'local-port=5353'
+
+    - name: PowerDNS - Set as master
+      lineinfile:
+        path: /etc/powerdns/recursor.conf
+        state: present
+        regexp: '^#?master=no'
+        line: 'master=yes'
+
     - name: PowerDNS - Set API Access KEY
       lineinfile:
         path: /etc/powerdns/pdns.conf
