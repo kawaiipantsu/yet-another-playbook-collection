@@ -21,11 +21,16 @@
   tasks:
       - name: Create random password for DB backend
         ansible.builtin.set_fact:
-          password: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits', 'punctuation'], length=15) }}"
+          dbpasswd: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits', '-'], length=20) }}"
+      - name: Create random password for admin user
+        ansible.builtin.set_fact:
+          adminpasswd: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits', '-'], length=20) }}"
 
       - name: Print
         ansible.builtin.debug:
           msg:
-            - "Your password is: {{ password }}"
+            - "Your DB password is: {{ dbpasswd }}"
+            - "Your Admin password is: {{ adminpasswd }}"
+
 
         
