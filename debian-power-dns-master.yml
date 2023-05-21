@@ -84,6 +84,11 @@
         masked: no
         state: started
 
+    - name: Make sure pymysql is present
+      pip:
+        name: pymysql
+        state: present
+
     - name: Create Main PowerDNS Databases
       community.mysql.mysql_db:
         name:
