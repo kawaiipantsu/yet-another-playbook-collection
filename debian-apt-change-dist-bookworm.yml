@@ -21,7 +21,7 @@
   tasks:
     - name: Generate new sources.list
       template:
-        src: "sources.list-testing-bookworm.j2.j2"
+        src: "sources.list-testing-bookworm.j2"
         dest: "/etc/apt/sources.list"
         mode: 0644
 
