@@ -88,6 +88,13 @@
           - dnsdbq
         state: latest
 
+    - name: Enable MySQL to listen on all interfaces
+      lineinfile:
+        path: /etc/mysql/mariadb.conf.d/50-server.cnf
+        state: present
+        regexp: '^#?bind-address'
+        line: 'bind-address = 0.0.0.0'
+
     - name: Enable service mariadb.service and start it
       ansible.builtin.systemd:
         daemon_reload: true
@@ -148,6 +155,7 @@
         state: present
         name: "{{ db_username }}"
         password: "{{ db_password }}"
+        host_all: true
         priv:
           '{{ db_pdns_master }}.*': 'ALL,GRANT'
           '{{ db_pdns_slave }}.*': 'ALL,GRANT'
