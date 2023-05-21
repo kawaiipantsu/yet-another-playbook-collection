@@ -60,6 +60,7 @@
           - yarn
           - python3-dev
           - python3-pip
+          - python3-pymysql
           - git
           - libsasl2-dev
           - libldap2-dev
@@ -84,11 +85,6 @@
         enabled: true
         masked: no
         state: started
-
-    - name: Make sure pymysql is present
-      pip:
-        name: pymysql
-        state: present
 
     - name: Create Main PowerDNS Databases
       community.mysql.mysql_db:
