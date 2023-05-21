@@ -104,6 +104,7 @@
         name: "{{ db_pdns_master }}"
         state: import
         target: /usr/share/pdns-backend-mysql/schema/schema.mysql.sql
+        force: true
 
     - name: Build PowerDNS database from schema (Slave database)
       community.mysql.mysql_db:
@@ -112,6 +113,7 @@
         name: "{{ db_pdns_slave }}"
         state: import
         target: /usr/share/pdns-backend-mysql/schema/schema.mysql.sql
+        force: true
 
     - name: Create Main PowerDNS Database user for all related databases
       community.mysql.mysql_user:
