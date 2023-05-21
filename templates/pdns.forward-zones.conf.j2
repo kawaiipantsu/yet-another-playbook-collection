@@ -1,0 +1,18 @@
+#   ____     KawaiiPantsu's     ____  _   _ ____
+#  |  _ \ _____      _____ _ __|  _ \| \ | / ___|
+#  | |_) / _ \ \ /\ / / _ \ '__| | | |  \| \___ \
+#  |  __/ (_) \ V  V /  __/ |  | |_| | |\  |___) |
+#  |_|   \___/ \_/\_/ \___|_|  |____/|_| \_|____/
+# ---------------------------------------------------------
+# {{ ansible_managed }}
+# Template used: {{ template_path }}
+
+## THIS FILE SHOULD BE UPDATED WTIH ALL DOMAINS YOU WANT TO FORWARD
+## TO THE LOCAL POWERDNS SERVER - ANYTHING ELSE IS HANDLED BY THE RECURSOR ...
+
+## I have made some default predefined, but you should really add your own
+## What ever makes sense on your home network / infra
+
+forward-zones=localdomain=127.0.0.1:5300
+forward-zones+=lan=127.0.0.1:5300
+forward-zones+=dmz=127.0.0.1:5300

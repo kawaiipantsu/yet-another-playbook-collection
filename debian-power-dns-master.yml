@@ -173,6 +173,14 @@
         group: pdns
         mode: 0640
 
+    - name: Generate gmysql configuration file.
+      template:
+        src: "pdns.forward-zones.conf.j2"
+        dest: "/etc/powerdns/recursor.d/forward-zones.conf"
+        owner: pdns
+        group: pdns
+        mode: 0640
+
     - name: Install PowerDNS-Admin 
       shell: |
         rm -rf /opt/powerdns-admin
@@ -206,12 +214,12 @@
         regexp: '^#?api='
         line: 'api=yes'
 
-    - name: PowerDNS - Recursor change default port to 5353
+    - name: PowerDNS - Fix ports for dual setup
       lineinfile:
-        path: /etc/powerdns/recursor.conf
+        path: /etc/powerdns/pdns.conf
         state: present
         regexp: '^#?local-port='
-        line: 'local-port=5353'
+        line: 'local-port=5300'
 
     - name: PowerDNS - Set as master
       lineinfile:
