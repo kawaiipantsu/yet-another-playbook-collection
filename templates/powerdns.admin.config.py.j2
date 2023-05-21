@@ -1,0 +1,61 @@
+#   ____     KawaiiPantsu's     ____  _   _ ____
+#  |  _ \ _____      _____ _ __|  _ \| \ | / ___|
+#  | |_) / _ \ \ /\ / / _ \ '__| | | |  \| \___ \
+#  |  __/ (_) \ V  V /  __/ |  | |_| | |\  |___) |
+#  |_|   \___/ \_/\_/ \___|_|  |____/|_| \_|____/
+# ---------------------------------------------------------
+# {{ ansible_managed }}
+# Template used: {{ template_path }}
+
+import os
+import urllib.parse
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+## BASIC APP CONFIG
+SALT = '$2b$12$yLUMTIfl21FKJQpTkRQXCu'
+SECRET_KEY = '{{ pda_secret }}'
+BIND_ADDRESS = '0.0.0.0'
+PORT = 9191
+SERVER_EXTERNAL_SSL = None
+
+## DATABASE CONFIG
+SQLA_DB_USER = '{{ db_username }}'
+SQLA_DB_PASSWORD = '{{ db_password }}'
+SQLA_DB_HOST = '127.0.0.1'
+SQLA_DB_NAME = '{{ db_pdns_master }}'
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+## CAPTCHA Config
+CAPTCHA_ENABLE = True
+CAPTCHA_LENGTH = 6
+CAPTCHA_WIDTH = 160
+CAPTCHA_HEIGHT = 60
+CAPTCHA_SESSION_KEY = 'captcha_image'
+
+## Server side sessions tracking
+SESSION_TYPE = 'sqlalchemy'
+
+## DATABASE - MySQL
+SQLALCHEMY_DATABASE_URI = 'mysql://{}:{}@{}/{}'.format(
+    urllib.parse.quote_plus(SQLA_DB_USER),
+    urllib.parse.quote_plus(SQLA_DB_PASSWORD),
+    SQLA_DB_HOST,
+    SQLA_DB_NAME
+)
+
+## SMTP config
+# MAIL_SERVER = 'localhost'
+# MAIL_PORT = 25
+# MAIL_DEBUG = False
+# MAIL_USE_TLS = False
+# MAIL_USE_SSL = False
+# MAIL_USERNAME = None
+# MAIL_PASSWORD = None
+# MAIL_DEFAULT_SENDER = ('PowerDNS-Admin', 'noreply@domain.ltd')
+
+## SAML Authnetication
+# Please note that there are tons of lines regarding setting up SAML
+# and linking roles, atrtibutes, usernames, emails and IDP ID's. Please
+# look at the original development file for details. We have removed it
+# all as its disabled and just clutters the config file.
+SAML_ENABLED = False

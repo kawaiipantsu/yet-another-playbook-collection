@@ -24,7 +24,7 @@
           dbpasswd: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits', '-'], length=20) }}"
       - name: Create random password for admin user
         ansible.builtin.set_fact:
-          adminpasswd: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits', '-'], length=20) }}"
+          adminpasswd: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits'], length=10) }}"
 
       - name: Print
         ansible.builtin.debug:

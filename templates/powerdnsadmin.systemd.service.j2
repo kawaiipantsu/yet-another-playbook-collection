@@ -1,0 +1,24 @@
+#   ____     KawaiiPantsu's     ____  _   _ ____
+#  |  _ \ _____      _____ _ __|  _ \| \ | / ___|
+#  | |_) / _ \ \ /\ / / _ \ '__| | | |  \| \___ \
+#  |  __/ (_) \ V  V /  __/ |  | |_| | |\  |___) |
+#  |_|   \___/ \_/\_/ \___|_|  |____/|_| \_|____/
+# ---------------------------------------------------------
+# {{ ansible_managed }}
+# Template used: {{ template_path }}
+
+[Unit]
+Description=PowerDNS-Admin
+After=network.target
+
+[Service]
+Type=simple
+User=nobody
+Group=nogroup
+Environment=PATH=/opt/powerdns-admin/flask/bin
+ExecStart=/opt/powerdns-admin/flask/bin/python /opt/powerdns-admin/run.py
+WorkingDirectory=/opt/powerdns-admin
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

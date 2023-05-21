@@ -1,0 +1,21 @@
+#   ____     KawaiiPantsu's     ____  _   _ ____
+#  |  _ \ _____      _____ _ __|  _ \| \ | / ___|
+#  | |_) / _ \ \ /\ / / _ \ '__| | | |  \| \___ \
+#  |  __/ (_) \ V  V /  __/ |  | |_| | |\  |___) |
+#  |_|   \___/ \_/\_/ \___|_|  |____/|_| \_|____/
+# ---------------------------------------------------------
+# {{ ansible_managed }}
+# Template used: {{ template_path }}
+
+## MySQL Configuration
+# Launch gmysql backend
+launch+=gmysql
+
+## Gmysql parameters
+gmysql-host=127.0.0.1
+gmysql-port=3306
+gmysql-dbname={{ db_pdns_master }}
+gmysql-user={{ db_username }}
+gmysql-password={{ db_password }}
+gmysql-dnssec=yes
+# gmysql-socket=
