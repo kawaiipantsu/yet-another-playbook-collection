@@ -49,8 +49,9 @@
     notify:
       - Rebuild locales database
 
-  - name: Update timezone to Europe/Copenhagen
-    copy: content="Europe/Copenhagen\n" dest=/etc/timezone owner=root group=root mode=0644
+  - name: Set timezone to Asia/Tokyo
+    community.general.timezone:
+      name: Europe/Copenhagen
     register: timezone
 
   - name: Reconfigure timezone data (if changed)
