@@ -1,0 +1,25 @@
+#!/bin/bash
+#   ____     KawaiiPantsu's     ____  _   _ ____
+#  |  _ \ _____      _____ _ __|  _ \| \ | / ___|
+#  | |_) / _ \ \ /\ / / _ \ '__| | | |  \| \___ \
+#  |  __/ (_) \ V  V /  __/ |  | |_| | |\  |___) |
+#  |_|   \___/ \_/\_/ \___|_|  |____/|_| \_|____/
+# ---------------------------------------------------------
+# {{ ansible_managed }}
+# Template used: {{ template_path }}
+
+## I have done this as i did not want to mess around with
+## Ansible Python Virtual ENV module or PIP module ...
+##
+## I just want to keep it simple ....
+
+cd /opt/powerdns-admin
+python3 -mvenv ./venv
+source ./venv/bin/activate
+pip install --upgrade pip
+pip install -r requirements.txt
+export FLASK_CONF=../configs/production.py
+export FLASK_APP=powerdnsadmin/__init__.py
+flask db upgrade
+yarn install --pure-lockfile
+flask assets build

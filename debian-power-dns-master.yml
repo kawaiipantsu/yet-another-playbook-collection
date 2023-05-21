@@ -157,18 +157,16 @@
         group: root
         mode: 640
 
-    - name: PowerDNS-Admin build and initiate DB 
-      shell: |
-        cd /opt/powerdns-admin
-        python3 -mvenv ./venv
-        source ./venv/bin/activate
-        pip install --upgrade pip
-        pip install -r requirements.txt
-        export FLASK_CONF=../configs/production.py
-        export FLASK_APP=powerdnsadmin/__init__.py
-        flask db upgrade
-        yarn install --pure-lockfile
-        flask assets build
+    - name: Generate powerdns-build file.
+      template:
+        src: "powerdns-admin.build.sh.j2"
+        dest: "/opt/powerdns-admin/ansible-build.sh"
+        owner: root
+        group: root
+        mode: 750
+
+    - name: PowerDNS-Admin build and initiate DB
+      ansible.builtin.shell: /opt/powerdns-admin/ansible-build.sh
 
     - name: Generate systemd powerdns-admin service
       template:
