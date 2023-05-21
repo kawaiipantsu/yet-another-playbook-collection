@@ -228,7 +228,7 @@
 
     - name: PowerDNS - Set as master
       lineinfile:
-        path: /etc/powerdns/recursor.conf
+        path: /etc/powerdns/pdns.conf
         state: present
         regexp: '^#?master=no'
         line: 'master=yes'
