@@ -1,3 +1,4 @@
+#!/bin/bash
 #   ____     KawaiiPantsu's     ____  _   _ ____
 #  |  _ \ _____      _____ _ __|  _ \| \ | / ___|
 #  | |_) / _ \ \ /\ / / _ \ '__| | | |  \| \___ \
@@ -7,18 +8,7 @@
 # {{ ansible_managed }}
 # Template used: {{ template_path }}
 
-[Unit]
-Description=PowerDNS-Admin
-After=network.target
-
-[Service]
-Type=simple
-User=pdns
-Group=pdns
-Environment=PATH=/opt/powerdns-admin/venv/bin
-ExecStart=/opt/powerdns-admin/run.sh
-WorkingDirectory=/opt/powerdns-admin
-Restart=always
-
-[Install]
-WantedBy=multi-user.target
+export PATH=/opt/powerdns-admin/venv/bin:$PATH
+export FLASK_CONF=/opt/powerdns-admin/configs/production.py
+cd /opt/powerdns-admin
+venv/bin/python run.py

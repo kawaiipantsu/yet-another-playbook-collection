@@ -201,6 +201,12 @@
     - name: PowerDNS-Admin build and initiate DB
       ansible.builtin.shell: /opt/powerdns-admin/ansible-build.sh
 
+    - name: Generate powerdns-run file.
+      template:
+        src: "powerdns-admin.run.sh.j2"
+        dest: "/opt/powerdns-admin/run.sh"
+        mode: 0750
+
     - name: Generate systemd powerdns-admin service
       template:
         src: "powerdnsadmin.systemd.service.j2"
