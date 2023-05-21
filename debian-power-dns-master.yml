@@ -66,6 +66,14 @@
           - git
           - libsasl2-dev
           - libldap2-dev
+          - libxmlsec1
+          - libxmlsec1-dev
+          - libssl-dev
+          - libxml2-dev
+          - libxslt1-dev
+          - libffi-dev
+          - apt-transport-https
+          - virtualenv
           - python3-venv
           - libmariadb-dev
           - pkg-config
@@ -156,9 +164,7 @@
         source ./venv/bin/activate
         pip install --upgrade pip
         pip install -r requirements.txt
-        pip uninstall itsdangerous
-        pip install  itsdangerous==2.0.1
-        export FLASK_CONF=/opt/powerdns-admin/configs/production.py
+        export FLASK_CONF=../configs/production.py
         export FLASK_APP=powerdnsadmin/__init__.py
         flask db upgrade
         yarn install --pure-lockfile
