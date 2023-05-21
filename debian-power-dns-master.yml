@@ -43,10 +43,10 @@
       ansible.builtin.set_fact:
         admin_password: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits'], length=10) }}"
 
-      - name: Prepare for YARN packages 
-        shell: |
-          curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null
-          echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
+    - name: Prepare for YARN packages 
+      shell: |
+        curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+        echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | tee /etc/apt/sources.list.d/yarn.list
 
     - name: Grab needed packages
       register: updatesys
@@ -54,8 +54,8 @@
         update_cache: yes
         force_apt_get: yes
         name:
-          - mariadb
-          - libmysqlclient-dev
+          - mariadb-server
+          - libmariadb-dev
           - nodejs
           - yarn
           - python3-dev
@@ -75,6 +75,14 @@
           - pdns-backend-mysql
           - dnsdbq
         state: latest
+
+    - name: Enable service mariadb.service and start it
+      ansible.builtin.systemd:
+        daemon_reload: true
+        name: mariadb.service
+        enabled: true
+        masked: no
+        state: started
 
     - name: Create Main PowerDNS Databases
       community.mysql.mysql_db:
