@@ -25,7 +25,7 @@
     db_pdns_slave: "pdns_slave"
     db_powerdnsadmin: "pdns_powerdnsadmin"
     db_username: "powerdns"
-
+ 
   tasks:
     - name: Create random SECRET for PowerDNS Admin
       ansible.builtin.set_fact:
@@ -158,10 +158,11 @@
         password: "{{ db_password }}"
         host: "%"
         priv:
-          '{{ db_pdns_master }}.*': 'ALL,GRANT'
-          '{{ db_pdns_slave }}.*': 'ALL,GRANT'
-          '{{ db_powerdnsadmin }}.*': 'ALL,GRANT'
-          'pdns_*.*': 'ALL,GRANT'
+          "{{ db_pdns_master }}.*": 'ALL,GRANT'
+          "{{ db_pdns_slave }}.*": 'ALL,GRANT'
+          "{{ db_powerdnsadmin }}.*": 'ALL,GRANT'
+          'pdns_%.*': 'ALL,GRANT'
+          'powerdns_%.*': 'ALL,GRANT'
           'powerdns.*': 'ALL,GRANT'
 
     - name: Generate gmysql configuration file.
