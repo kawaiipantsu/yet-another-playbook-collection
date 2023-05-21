@@ -29,7 +29,7 @@
   tasks:
     - name: Create random SECRET for PowerDNS Admin
       ansible.builtin.set_fact:
-        pda_secret: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits', '-'], length=20) }}"
+        pda_secret: "{{ lookup('ansible.builtin.password', '/dev/null', chars=['ascii_letters', 'digits', '-'], length=30) }}"
 
     - name: Create random password for database user
       ansible.builtin.set_fact:
@@ -149,9 +149,11 @@
         name: "{{ db_username }}"
         password: "{{ db_password }}"
         priv:
-          "{{ db_pdns_master }}.*": "ALL,GRANT"
-          "{{ db_pdns_slave }}.*": "ALL,GRANT"
-          "{{ db_powerdnsadmin }}.*": "ALL,GRANT"
+          '{{ db_pdns_master }}.*': 'ALL,GRANT'
+          '{{ db_pdns_slave }}.*': 'ALL,GRANT'
+          '{{ db_powerdnsadmin }}.*': 'ALL,GRANT'
+          'pdns_*.*': 'ALL,GRANT'
+          'powerdns.*': 'ALL,GRANT'
 
     - name: Generate gmysql configuration file.
       template:
@@ -181,6 +183,15 @@
         owner: root
         group: root
         mode: 750
+
+    - name: DB - DEBUG
+      ansible.builtin.debug:
+        msg:
+          - "DB Username................: {{ db_username }}"
+          - "DB Password................: {{ db_password }}"
+          - "DB PDNS DB.................: {{ db_pdns_master }}"
+          - "DB PDNS DB...(not used)....: {{ db_pdns_slave }}"
+          - "DB PDNS-ADMIN DB...........: {{ db_powerdnsadmin }}"
 
     - name: PowerDNS-Admin build and initiate DB
       ansible.builtin.shell: /opt/powerdns-admin/ansible-build.sh
@@ -254,3 +265,4 @@
           - " === QUICK HELP INFO (Use if wanted)"
           - " "
           - "Random password............: {{ admin_password }}"
+
