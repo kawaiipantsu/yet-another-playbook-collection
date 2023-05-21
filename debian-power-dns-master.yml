@@ -62,6 +62,7 @@
           - python3-pip
           - python3-flask
           - python3-pymysql
+          - python3-flask-mail
           - git
           - libsasl2-dev
           - libldap2-dev
@@ -131,23 +132,15 @@
       template:
         src: "pdns.local.gmysql.conf.j2"
         dest: "/etc/powerdns/pdns.d/pdns.local.gmysql.conf"
-        owner: pdns
-        group: root
+        owner: root
+        group: pdns
         mode: 640
 
     - name: Install PowerDNS-Admin 
       shell: |
+        rm -rf /opt/powerdns-admin
         git clone https://github.com/PowerDNS-Admin/PowerDNS-Admin.git /opt/powerdns-admin
-        cd /opt/powerdns-admin
-        python3 -mvenv ./venv
-        source ./venv/bin/activate
-        pip install --upgrade pip
-        pip install -r requirements.txt
-        pip uninstall itsdangerous
-        pip install  itsdangerous==2.0.1
-        cp /opt/powerdns-admin/configs/development.py /opt/powerdns-admin/configs/production.py
-        chown -R pdns:root /opt/powerdns-admin
-
+        
     - name: Generate powerdns-admin configuration file.
       template:
         src: "powerdns.admin.config.py.j2"
@@ -156,17 +149,18 @@
         group: root
         mode: 640
 
-    - name: PowerDNS-Admin initiate DB 
+    - name: PowerDNS-Admin build and initiate DB 
       shell: |
-        export FLASK_CONF=/opt/powerdns-admin/configs/production.py
         cd /opt/powerdns-admin
+        python3 -mvenv ./venv
+        source ./venv/bin/activate
+        pip install --upgrade pip
+        pip install -r requirements.txt
+        pip uninstall itsdangerous
+        pip install  itsdangerous==2.0.1
+        export FLASK_CONF=/opt/powerdns-admin/configs/production.py
         export FLASK_APP=powerdnsadmin/__init__.py
         flask db upgrade
-
-    - name: PowerDNS-Admin generate assets 
-      shell: |
-        export FLASK_CONF=/opt/powerdns-admin/configs/production.py
-        cd /opt/powerdns-admin
         yarn install --pure-lockfile
         flask assets build
 
