@@ -49,7 +49,7 @@
     notify:
       - Rebuild locales database
 
-  - name: Set timezone to Asia/Tokyo
+  - name: Set timezone to Europe/Copenhagen
     community.general.timezone:
       name: Europe/Copenhagen
     register: timezone
