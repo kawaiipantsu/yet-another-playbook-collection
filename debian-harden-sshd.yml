@@ -45,13 +45,13 @@
 
     - name: Download custom harden sshd_config
       ansible.builtin.get_url:
-        url: https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/9858288accbb73e11847efcb883e571864ad3e4a/sshd_config
+        url: https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/sshd_config
         dest: /etc/ssh/sshd_config
         mode: '0644'
         
     - name: Download public-pre-auth sshd_public_banner.txt
       ansible.builtin.get_url:
-        url: https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/9858288accbb73e11847efcb883e571864ad3e4a/sshd_public_banner.txt
+        url: https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/sshd_public_banner.txt
         dest: /etc/ssh/sshd_public_banner.txt
         mode: '0644'
 
