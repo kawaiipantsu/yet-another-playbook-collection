@@ -53,6 +53,7 @@
         chmod 644 /etc/ssh/sshd_config
         chmod 644 /etc/ssh/sshd_public_banner.txt
         sha1sum /etc/ssh/sshd_config
+      warn: false
       check_mode: false
       changed_when: true
 
