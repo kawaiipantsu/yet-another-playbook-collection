@@ -36,29 +36,20 @@
       ansible.builtin.debug:
         msg: "This is host/server: {{ ansible_hostname }}"
 
-    - name: Make backup of sshd_config
-      ansible.builtin.copy:
-        src: /etc/ssh/sshd_config
-        dest: /etc/ssh/sshd_config.{{bak_ts}}.bak
-        owner: root
-        group: root
-        mode: '0644'
-        
-    - name: Make backup of sshd_public_banner.txt
-      ansible.builtin.copy:
-        src: /etc/ssh/sshd_public_banner.txt
-        dest: /etc/ssh/sshd_public_banner.txt.{{bak_ts}}.bak
-        owner: root
-        group: root
-        mode: '0644'
+    - name: Backup previous sshd config and banner
+      shell: |
+        mv -n /etc/ssh/sshd_config /etc/ssh/sshd_config.{{bak_ts}}.bak 2> /dev/null || true
+        mv -n /etc/ssh/sshd_public_banner.txt /etc/ssh/sshd_public_banner.txt.{{bak_ts}}.bak2> /dev/null || true
+      check_mode: false
+      changed_when: true
 
-    - name: Download sshd_config
+    - name: Download custom harden sshd_config
       ansible.builtin.get_url:
         url: https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/9858288accbb73e11847efcb883e571864ad3e4a/sshd_config
         dest: /etc/ssh/sshd_config
         mode: '0644'
         
-    - name: Download sshd_public_banner.txt
+    - name: Download public-pre-auth sshd_public_banner.txt
       ansible.builtin.get_url:
         url: https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/9858288accbb73e11847efcb883e571864ad3e4a/sshd_public_banner.txt
         dest: /etc/ssh/sshd_public_banner.txt
