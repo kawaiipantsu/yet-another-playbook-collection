@@ -39,7 +39,7 @@
     - name: Backup previous sshd config and banner
       shell: |
         mv -n /etc/ssh/sshd_config /etc/ssh/sshd_config.{{bak_ts}}.bak 2> /dev/null || true
-        mv -n /etc/ssh/sshd_public_banner.txt /etc/ssh/sshd_public_banner.txt.{{bak_ts}}.bak2> /dev/null || true
+        mv -n /etc/ssh/sshd_public_banner.txt /etc/ssh/sshd_public_banner.txt.{{bak_ts}}.bak 2> /dev/null || true
       check_mode: false
       changed_when: true
 
