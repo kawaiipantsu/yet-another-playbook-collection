@@ -55,13 +55,33 @@
         dest: /etc/ssh/sshd_public_banner.txt
         mode: '0644'
 
-    - name: SHA1 CHECKSUM output on sshd_config
-      shell: |
-        sha1sum /etc/ssh/sshd_config
-      check_mode: false
-      changed_when: true
+    - name: Get checksum of new sshd_config
+      stat:
+        path : "/etc/ssh/sshd_config"
+      register: sshd_config_new
+    
+    - name: New sshd_config SHA1
+      set_fact:
+        file1: "{{ sshd_config_new.stat.checksum }}"
+    
+    - name: Get checksum of old sshd_config
+      stat:
+        path : "/etc/ssh/sshd_config.{{bak_ts}}.bak"
+      register: sshd_config_bak
+    
+    - name: Bak sshd_config SHA1
+      set_fact:
+        file2: "{{ sshd_config_bak.stat.checksum }}"
+    
+    - name: Did we make updates to our curremt sshd config
+      debug:
+        msg: "File Compare"
+      failed_when:  file1 == file2
+      register: sshd_updated
+      ignore_errors: true
 
     - name: Restart SSH daemon
       ansible.builtin.systemd:
         name: sshd
         state: restarted
+      when: sshd_updated
