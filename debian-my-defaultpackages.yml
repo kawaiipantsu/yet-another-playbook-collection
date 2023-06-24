@@ -49,6 +49,7 @@
         force_apt_get: yes
         name:
           - lsb-release
+          - rsyslog
           - aptitude
           - debian-goodies
           - nano
@@ -57,6 +58,7 @@
           - curl
           - w3m
           - ftp
+          - ftp-ssl
           - net-tools
           - netcat-traditional
           - tcpdump
