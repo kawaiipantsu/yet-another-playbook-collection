@@ -32,14 +32,6 @@
       ansible.builtin.set_fact:
         bak_ts: "{{ lookup('pipe', 'date +%Y%m%dT%H%M%S') }}"
         
-    - name: Make sure wget is installed and get version
-      shell:
-        cmd: wget --version 2>&1 | head -1 | cut -d '"' -f 2
-      register: wget
-      check_mode: false
-      changed_when: false
-      failed_when: "'not found' in wget.stdout"
-
     - name: Audit log output for what FQDN hosts is being custom sshd harden
       ansible.builtin.debug:
         msg: "This is host/server: {{ ansible_hostname }}"
