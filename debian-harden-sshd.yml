@@ -75,7 +75,7 @@
     
     - name: Did we make updates to our curremt sshd config
       debug:
-        msg: "File Compare"
+        msg: "sshd_config updated! - Will restart sshd"
       failed_when:  file1 == file2
       register: sshd_updated
       ignore_errors: true
