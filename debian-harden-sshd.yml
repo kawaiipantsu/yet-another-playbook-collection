@@ -44,20 +44,41 @@
       ansible.builtin.debug:
         msg: "This is host/server: {{ ansible_hostname }}"
 
-    - name: Download custom harden sshd_config file
+    - name: Make backup of sshd_config
+      ansible.builtin.copy:
+        src: /etc/ssh/sshd_config
+        dest: /etc/ssh/sshd_config.{{bak_ts}}.bak
+        owner: root
+        group: root
+        mode: '0644'
+        
+    - name: Make backup of sshd_public_banner.txt
+      ansible.builtin.copy:
+        src: /etc/ssh/sshd_public_banner.txt
+        dest: /etc/ssh/sshd_public_banner.txt.{{bak_ts}}.bak
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Download sshd_config
+      ansible.builtin.get_url:
+        url: https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/9858288accbb73e11847efcb883e571864ad3e4a/sshd_config
+        dest: /etc/ssh/sshd_config
+        mode: '0644'
+        
+    - name: Download sshd_public_banner.txt
+      ansible.builtin.get_url:
+        url: https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/9858288accbb73e11847efcb883e571864ad3e4a/sshd_public_banner.txt
+        dest: /etc/ssh/sshd_public_banner.txt
+        mode: '0644'
+
+    - name: SHA1 CHECKSUM output on sshd_config
       shell: |
-        mv -n /etc/ssh/sshd_config /etc/ssh/sshd_config.{{bak_ts}}.bak 2>/dev/null || true
-        mv -n /etc/ssh/sshd_public_banner.txt /etc/ssh/sshd_public_banner.txt.{{bak_ts}}.bak 2>/dev/null || true
-        wget --quiet --no-passive-ftp --output-document="/etc/ssh/sshd_config" "https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/9858288accbb73e11847efcb883e571864ad3e4a/sshd_config" 2>/dev/null
-        wget --quiet --no-passive-ftp --output-document="/etc/ssh/sshd_public_banner.txt" "https://gist.githubusercontent.com/kawaiipantsu/b27d953de9793731b60b4636bad7a3dc/raw/9858288accbb73e11847efcb883e571864ad3e4a/sshd_public_banner.txt" 2>/dev/null
-        chmod 644 /etc/ssh/sshd_config
-        chmod 644 /etc/ssh/sshd_public_banner.txt
         sha1sum /etc/ssh/sshd_config
-      warn: false
       check_mode: false
       changed_when: true
 
-    - name: restart sshd
+    - name: Restart SSH daemon
       ansible.builtin.systemd:
         name: sshd
         state: restarted
