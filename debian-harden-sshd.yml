@@ -28,8 +28,10 @@
 
 - hosts: debian
   tasks:
-    - set_fact:
-      bak_ts: "{{ lookup('pipe', 'date +%Y%m%dT%H%M%S') }}"
+    - name: Get timestamp for bak files
+      ansible.builtin.set_fact:
+        bak_ts: "{{ lookup('pipe', 'date +%Y%m%dT%H%M%S') }}"
+        
     - name: Make sure wget is installed and get version
       shell:
         cmd: wget --version 2>&1 | head -1 | cut -d '"' -f 2
