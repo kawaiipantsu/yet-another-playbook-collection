@@ -1,0 +1,11 @@
+#  _     ___   ____    | Simple little conf.d
+# | |   / _ \ / ___|   | file for rsyslogd or
+# | |  | | | | |  _    | similar. Sending all
+# | |__| |_| | |_| |   | my logs to my log
+# |_____\___/ \____|   | management solution
+# ---------------------------------------------------------
+# {{ ansible_managed }}
+# Template used: {{ template_path }}
+
+## log.dmz.darknet.dk (Graylog) Syslog UDP Ingest @ 10514
+*.* @10.10.10.20:10514
