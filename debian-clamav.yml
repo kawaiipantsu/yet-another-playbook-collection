@@ -29,6 +29,7 @@
         cache_valid_time: 3600
         name:
           - clamav
+          - clamav-daemon
           - clamav-freshclam
         state: latest
 
