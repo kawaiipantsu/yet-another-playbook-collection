@@ -1,0 +1,32 @@
+#   ____ _   FRESHCLAM.CONF   ___     __  
+#  / ___| | __ _ _ __ ___    / \ \   / /  | Freshclam and
+# | |   | |/ _` | '_ ` _ \  / _ \ \ / /   | ClamAV config
+# | |___| | (_| | | | | | |/ ___ \ V /    | for Mirrored
+#  \____|_|\__,_|_| |_| |_/_/   \_\_/     | internal setup
+# ---------------------------------------------------------
+# {{ ansible_managed }}
+# Template used: {{ template_path }}
+
+DatabaseOwner clamav
+UpdateLogFile /var/log/clamav/freshclam.log
+LogVerbose false
+LogSyslog true
+LogFacility LOG_LOCAL6
+LogFileMaxSize 0
+LogRotate true
+LogTime true
+Foreground false
+Debug false
+MaxAttempts 5
+DatabaseDirectory /var/lib/clamav
+DNSDatabaseInfo current.cvd.clamav.net
+ConnectTimeout 30
+ReceiveTimeout 0
+TestDatabases yes
+ScriptedUpdates yes
+CompressLocalDatabase no
+Bytecode true
+NotifyClamd /etc/clamav/clamd.conf
+# Check for new database 24 times a day
+Checks 24
+DatabaseMirror http://10.10.10.12:81
