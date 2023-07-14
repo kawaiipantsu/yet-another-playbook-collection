@@ -50,6 +50,7 @@
         name:
           - lsb-release
           - clamav
+          - clamav-daemon
           - clamav-freshclam
           - rsyslog
           - aptitude
