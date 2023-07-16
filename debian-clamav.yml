@@ -45,6 +45,8 @@
       file:
         path: /var/lib/clamav/freshclam.dat
         state: absent
+      notify:
+        - Restart CLAMAV
 
     - name: Ensure ClamAV Freshclam is running and enabled as configured.
       service:
