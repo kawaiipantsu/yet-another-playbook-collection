@@ -40,6 +40,11 @@
         mode: 0644
       notify:
         - Restart CLAMAV
+        
+    - name: Delete stale freshclam.dat file to reuse new mirror setting
+      file:
+        path: /var/lib/clamav/freshclam.dat
+        state: absent
 
     - name: Ensure ClamAV Freshclam is running and enabled as configured.
       service:
