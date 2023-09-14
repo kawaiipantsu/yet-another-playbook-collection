@@ -30,6 +30,7 @@
 ---
 
 - hosts: debian
+  ignore_unreachable: true
   tasks:
     - name: Make sure wget is installed and get version
       shell:
