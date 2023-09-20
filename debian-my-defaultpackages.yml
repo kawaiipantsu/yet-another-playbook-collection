@@ -49,9 +49,6 @@
         force_apt_get: yes
         name:
           - lsb-release
-          - clamav
-          - clamav-daemon
-          - clamav-freshclam
           - rsyslog
           - aptitude
           - debian-goodies
